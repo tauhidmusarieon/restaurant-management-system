@@ -9,27 +9,26 @@ void runTicketSystem();
 bool saveUser(const string &username, const string &password);
 bool checkUser(const string &username, string &password);
 
-string username, username1, username2, password, password1;
 void login()
 {
     cout << "       Login system        " << endl;
+    string username1, password1;
     cout << "Enter username: ";
     cin >> username1;
     cout << "Enter password: ";
     cin >> password1;
 
     string storedPassword;
-    if (username == username1 && password == password1)
+    if (checkUser(username1, storedPassword) && password1 == storedPassword)
     {
         cout << "Login successful." << endl;
         cout << endl;
-        // runTicketSystem();
     }
     else
     {
         int y;
         cout << "Login unsuccessful." << endl;
-        cout << "if you are not signup press '1', or forgot password, press '3': ";
+        cout << "if you are not signup press '1', or See password, press '3': ";
 
         cin >> y;
         if (y == 3)
@@ -53,9 +52,20 @@ void signup()
 {
     cout << "Create username and password " << endl;
     cout << "Enter username : ";
+    string username, password;
     cin >> username;
     cout << "Enter password : ";
     cin >> password;
+
+    if (saveUser(username, password))
+    {
+        cout << "Signup successful. Please login...." << endl;
+    }
+    else
+    {
+        cout << "Signup failed. Please try again later." << endl;
+    }
+
     cout << endl;
     login();
 }
@@ -63,14 +73,32 @@ void signup()
 void forgot()
 {
     cout << "Enter the username : ";
+    string username2;
     cin >> username2;
-    if (username == username2)
+    string storedPassword;
+    int se_key;
+    cout << "Enter the Security Key : ";
+    cin >> se_key;
+
+    if (se_key == 1010)
     {
-        signup();
+        if (checkUser(username2, storedPassword))
+        {
+            cout << "Your password is: " << storedPassword << endl;
+        }
+        else
+        {
+            cout << "Your username or security key is wrong." << endl;
+            cout << "Please contact the Admin panel." << endl;
+            cout << "Admin name: Tauhid Musa Rieon" << endl;
+            cout << "Email: tauhidmusarieon01@gmail.com" << endl;
+            cout << "Thanks." << endl;
+            cout << endl;
+        }
     }
     else
     {
-        cout << "Your username is wrong." << endl;
+        cout << "Your username or security key is wrong." << endl;
         cout << "Please contact the Admin panel." << endl;
         cout << "Admin name: Tauhid Musa Rieon" << endl;
         cout << "Email: tauhidmusarieon01@gmail.com" << endl;
@@ -94,7 +122,7 @@ bool saveUser(const string &username, const string &password)
     userFile.close();
     passFile.close();
 
-    return true ;
+    return true;
 }
 
 bool checkUser(const string &username, string &password)
@@ -127,7 +155,7 @@ bool checkUser(const string &username, string &password)
     }
     userFile.close();
     passFile.close();
-    return false ;
+    return false;
 }
 
 int main()
