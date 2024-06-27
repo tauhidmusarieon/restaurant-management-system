@@ -6,6 +6,9 @@ void signup();
 void forgot();
 void search_tickyet_status();
 void runTicketSystem();
+bool saveUser(const string &username, const string &password);
+bool checkUser(const string &username, string &password);
+
 string username, username1, username2, password, password1;
 void login()
 {
@@ -15,11 +18,12 @@ void login()
     cout << "Enter password: ";
     cin >> password1;
 
+    string storedPassword;
     if (username == username1 && password == password1)
     {
         cout << "Login successful." << endl;
         cout << endl;
-        //runTicketSystem();
+        // runTicketSystem();
     }
     else
     {
@@ -74,6 +78,57 @@ void forgot()
         cout << endl;
     }
 }
+bool saveUser(const string &username, const string &password)
+{
+    ofstream userFile("users.txt", ios::app);
+    ofstream passFile("passwords.txt", ios::app);
+
+    if (!userFile.is_open() || !passFile.is_open())
+    {
+        cerr << "Error opening file for writing." << endl;
+        return false;
+    }
+    userFile << username << endl;
+    passFile << password << endl;
+
+    userFile.close();
+    passFile.close();
+
+    return true ;
+}
+
+bool checkUser(const string &username, string &password)
+{
+    ifstream userFile("users.txt");
+    ifstream passFile("passwords.txt");
+
+    if (!userFile.is_open() || !passFile.is_open())
+    {
+        cerr << "Error opening file for reading." << endl;
+        return false;
+    }
+
+    string line;
+    while (getline(userFile, line))
+    {
+        if (line == username)
+        {
+            if (getline(passFile, password))
+            {
+                userFile.close();
+                passFile.close();
+                return true;
+            }
+        }
+        else
+        {
+            getline(passFile, line);
+        }
+    }
+    userFile.close();
+    passFile.close();
+    return false ;
+}
 
 int main()
 {
@@ -105,8 +160,6 @@ int main()
     default:
         cout << "Invalid option. Please choose a valid option." << endl;
     }
-
-
 
     return 0;
 }
