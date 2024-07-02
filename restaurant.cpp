@@ -22,7 +22,9 @@ void login()
     if (checkUser(username1, storedPassword) && password1 == storedPassword)
     {
         cout << "Login successful." << endl;
+        cout<<"\nAssalam u Alaikum..! "<<username1<<"."<<"\nWhat would you like to order?\n\n";
         cout << endl;
+        menu();
     }
     else
     {
