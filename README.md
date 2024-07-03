@@ -5,6 +5,7 @@ Code Sequence –
 4. Menu List
 5. Different types Food List
 6. Order Food
-7. Check Balance
-8. Add balance
-9. Logout
+7. Pay Bill
+8. Check Balance
+9. Add balance
+10. Logout
