@@ -8,6 +8,7 @@ void menu();
 void burger();
 void payBill();
 void addBalance();
+void paratha();
 bool saveUser(const string &username, const string &password);
 bool checkUser(const string &username, string &password);
 int bill = 0;
@@ -53,152 +54,331 @@ void payBill()
 }
 void addBalance()
 {
-        int add;
-        cout << "Enter the amount you want to add : ";
-        cin >> add;
-        mainBalance+=add;
-        cout << "money added successfull." << endl;
-        cout << "Your current balance is = " << mainBalance << endl <<endl;
-        menu();
+    int add;
+    cout << "Enter the amount you want to add : ";
+    cin >> add;
+    mainBalance+=add;
+    cout << "money added successfull." << endl;
+    cout << "Your current balance is = " << mainBalance << endl <<endl;
+    menu();
 }
 
 
 void burger()
 {
-        cout<<"\t\t\t\t\t    *------BURGER------*"<<endl;
-		cout<<"\t\t\t\tPress '1' Zinger Burger......................TK:299"<<endl;
-		cout<<"\t\t\t\tPress '2' Zinger Burger with Cheese..........TK:349"<<endl;
-		cout<<"\t\t\t\tPress '3' Chicken Burger.....................TK:220"<<endl;
-		cout<<"\t\t\t\tPress '4' Chicken Burger with Cheese.........TK:280"<<endl;
-		cout<<"\t\t\t\tPress '5' Tower Burger.......................TK:380"<<endl;
-		cout<<"Please select option : ";
-		int n; cin >> n;
-		if(n==1)
+    cout<<"\t\t\t\t\t    *------BURGER------*"<<endl;
+    cout<<"\t\t\t\tPress '1' Zinger Burger......................TK:299"<<endl;
+    cout<<"\t\t\t\tPress '2' Zinger Burger with Cheese..........TK:349"<<endl;
+    cout<<"\t\t\t\tPress '3' Chicken Burger.....................TK:220"<<endl;
+    cout<<"\t\t\t\tPress '4' Chicken Burger with Cheese.........TK:280"<<endl;
+    cout<<"\t\t\t\tPress '5' Tower Burger.......................TK:380"<<endl;
+    cout<<"Please select option : ";
+    int n;
+    cin >> n;
+    if(n==1)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Zinger burger "<<endl << endl;
+        bill+=299*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+b11:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
         {
-            cout<<"How much quantity do you want : ";
-            int a;
-            cin >> a ;
-            cout<<"You Entered "<< a <<" Zinger burger "<<endl << endl;
-            bill+=299*a;
-            cout<<"The current bill is: "<< bill <<endl;
-            cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-            cout<<"Please select option : ";
-            cin >> a ;
-            if (a==0)
-            {
-                burger();
-            }
-            else if (a==1)
-            {
-                menu();
-            }
-            else if (a==2)
-            {
-                payBill();
-            }
+            burger();
         }
-        else if (n==2)
+        else if (a==1)
         {
-            cout<<"How much quantity do you want : ";
-            int a;
-            cin >> a ;
-            cout<<"You Entered "<< a <<" Zinger Burger with Cheese "<<endl << endl;
-            bill+=349*a;
-            cout<<"The current bill is: "<< bill <<endl;
-            cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-            cout<<"Please select option : ";
-            cin >> a ;
-            if (a==0)
-            {
-                burger();
-            }
-            else if (a==1)
-            {
-                menu();
-            }
-            else if (a==2)
-            {
-                payBill();
-            }
+            menu();
         }
-        else if (n==3)
+        else if (a==2)
         {
-            cout<<"How much quantity do you want : ";
-            int a;
-            cin >> a ;
-            cout<<"You Entered "<< a <<" Chicken Burger "<<endl << endl;
-            bill+=220*a;
-            cout<<"The current bill is: "<< bill <<endl;
-            cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-            cout<<"Please select option : ";
-            cin >> a ;
-            if (a==0)
-            {
-                burger();
-            }
-            else if (a==1)
-            {
-                menu();
-            }
-            else if (a==2)
-            {
-                payBill();
-            }
-        }
-        else if (n==4)
-        {
-            cout<<"How much quantity do you want : ";
-            int a;
-            cin >> a ;
-            cout<<"You Entered "<< a <<" Chicken Burger with Cheese"<<endl << endl;
-            bill+=280*a;
-            cout<<"The current bill is: "<< bill <<endl;
-            cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-            cout<<"Please select option : ";
-            cin >> a ;
-            if (a==0)
-            {
-                burger();
-            }
-            else if (a==1)
-            {
-                menu();
-            }
-            else if (a==2)
-            {
-                payBill();
-            }
-        }
-        else if (n==5)
-        {
-            cout<<"How much quantity do you want : ";
-            int a;
-            cin >> a ;
-            cout<<"You Entered "<< a <<" Tower Burger"<<endl << endl;
-            bill+=380*a;
-            cout<<"The current bill is: "<< bill <<endl;
-            cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-            cout<<"Please select option : ";
-            cin >> a ;
-            if (a==0)
-            {
-                burger();
-            }
-            else if (a==1)
-            {
-                menu();
-            }
-            else if (a==2)
-            {
-                payBill();
-            }
+            payBill();
         }
         else
         {
-            cout << "Invalid choice.\n";
-            burger();
-
+            cout << "Invalid choice." << endl << endl;
+            goto b11;
         }
+    }
+    else if (n==2)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Zinger Burger with Cheese "<<endl << endl;
+        bill+=349*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+b12:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            burger();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto b12;
+        }
+    }
+    else if (n==3)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Chicken Burger "<<endl << endl;
+        bill+=220*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+b13:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            burger();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto b13;
+        }
+    }
+    else if (n==4)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Chicken Burger with Cheese"<<endl << endl;
+        bill+=280*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+b14:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            burger();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto b14;
+        }
+    }
+    else if (n==5)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Tower Burger"<<endl << endl;
+        bill+=380*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+b15:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            burger();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto b15;
+        }
+    }
+    else
+    {
+        cout << "Invalid choice.\n";
+        burger();
+
+    }
+
+}
+
+void paratha()
+{
+    cout<<"\t\t\t\t\t   *----PARATHA ROLLS----*"<<endl;
+    cout<<"\t\t\t\tPress '1' Zinger Paratha.....................TK:299"<<endl;
+    cout<<"\t\t\t\tPress '2' Zinger Cheese Paratha..............TK:360"<<endl;
+    cout<<"\t\t\t\tPress '3' Chicken Paratha....................TK:260"<<endl;
+    cout<<"\t\t\t\tPress '4' Vegetarian Paratha.................TK:150"<<endl;
+
+    int prt;
+    cout<<"Please select option : ";
+    cin >> prt;
+    if(prt == 1)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Zinger Paratha"<<endl << endl;
+        bill+=299*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+p11:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            paratha();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto p11;
+        }
+    }
+    else if(prt == 2)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Zinger Cheese Paratha"<<endl << endl;
+        bill+=360*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+p12:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            paratha();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto p12;
+        }
+    }
+    else if(prt == 3)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Chicken Paratha"<<endl << endl;
+        bill+=260*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+p13:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            paratha();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto p13;
+        }
+    }
+    else if(prt == 4)
+    {
+        cout<<"How much quantity do you want : ";
+        int a;
+        cin >> a ;
+        cout<<"You Entered "<< a <<" Vegetarian Paratha"<<endl << endl;
+        bill+=150*a;
+        cout<<"The current bill is: "<< bill <<endl;
+
+p14:
+        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
+        cout<<"Please select option : ";
+        cin >> a ;
+        if (a==0)
+        {
+            paratha();
+        }
+        else if (a==1)
+        {
+            menu();
+        }
+        else if (a==2)
+        {
+            payBill();
+        }
+        else
+        {
+            cout << "Invalid choice." << endl << endl;
+            goto p14;
+        }
+    }
+    else
+    {
+        cout << "Invalid choice." << endl << endl;
+        paratha();
+    }
 
 }
 
@@ -206,18 +386,22 @@ void menu()
 {
     cout <<"\t\t\t\t*------Menu------*" << endl ;
     cout<<"\t\t\t\tPress '1' BURGER"<<endl;
-	cout<<"\t\t\t\tPress '2' PARATHA ROLLS"<<endl;
-	cout<<"\t\t\t\tPress '3' SHAWARMA"<<endl;
-	cout<<"\t\t\t\tPress '4' BIRYANI"<<endl;
-	cout<<"\t\t\t\tPress '5' PIZZA"<<endl;
-	cout<<"\t\t\t\tPress '6' SALAD"<<endl;
-	cout<<"\t\t\t\tPress '7' COLD DRINKS" << endl ;
-	cout<<"Please select option : ";
-	int ms ;
-	cin >> ms;
-	if (ms == 1)
+    cout<<"\t\t\t\tPress '2' PARATHA ROLLS"<<endl;
+    cout<<"\t\t\t\tPress '3' SHAWARMA"<<endl;
+    cout<<"\t\t\t\tPress '4' BIRYANI"<<endl;
+    cout<<"\t\t\t\tPress '5' PIZZA"<<endl;
+    cout<<"\t\t\t\tPress '6' SALAD"<<endl;
+    cout<<"\t\t\t\tPress '7' COLD DRINKS" << endl ;
+    cout<<"Please select option : ";
+    int ms ;
+    cin >> ms;
+    if (ms == 1)
     {
         burger();
+    }
+    else if( ms == 2)
+    {
+        paratha();
     }
 }
 
@@ -292,6 +476,9 @@ void forgot()
     cin >> username2;
     string storedPassword;
     int se_key;
+    cout << "Enter your Email : ";
+    string s ;
+    cin >> s ;
     cout << "Enter the Security Key : ";
     cin >> se_key;
 
@@ -299,7 +486,8 @@ void forgot()
     {
         if (checkUser(username2, storedPassword))
         {
-            cout << "Your password is: " << storedPassword << endl;
+            cout << "Your password is: " << storedPassword << endl << endl;
+            login();
         }
         else
         {
