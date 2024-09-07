@@ -1,761 +1,406 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
+#include <unordered_map>
+#include <string>
+#include <limits>
+#include <conio.h>
+#include <cstdlib>
+
 using namespace std;
 
-void mainProgram();
-void login();
-void signup();
-void forgot();
-void menu();
-void burger();
-void payBill();
-void addBalance();
-void paratha();
-void shawarma();
-bool saveUser(const string &username, const string &password);
-bool checkUser(const string &username, string &password);
-int bill = 0;
-int mainBalance = 100;
-int cnt = 0;
-void payBill()
-{
-    int pay_amt;
-    cout << "\nYour current bill is : " << bill << endl;
-    cout << "Enter the amount : ";
-    cin >> pay_amt;
-    if (mainBalance >= bill)
-    {
-        if(pay_amt >= bill)
-        {
-            cout << "Payment Successfull.\nEnjoy your time" << endl;
-            mainBalance-= bill;
-            cout << "Your current Balance is : " << mainBalance << endl;
-        }
-        else
-        {
-            cout << "Your bill is more than your paid amount ." << endl;
-            payBill();
-        }
-    }
-    else
-    {
-        cout << "Insufficient Balance. Purchase unsuccessful." << endl;
-        cout << "Please add : " << bill-mainBalance << " TK" << endl;
-        cout << "if you want to 'Add Money' to your account Press 1 or 'Menu' for 0 : ";
-        bill = 0;
+struct User {
+    string username;
+    string password;
+    string email;
+    double balance;
+};
 
-        int b;
-        cin >> b;
-        if (b==1)
-        {
-            addBalance();
-        }
-        else if (b==0)
-        {
-            menu();
+unordered_map<string, User> users;
+
+void saveUsers() {
+    ofstream outFile("users.txt");
+    if (!outFile) {
+        cerr << "Error opening file for writing.\n";
+        return;
+    }
+    for (const auto &entry : users) {
+        const User &user = entry.second;
+        outFile << user.username << ' ' << user.password << ' ' << user.email << ' ' << user.balance << "\n";
+    }
+    outFile.close();
+}
+
+void loadUsers() {
+    ifstream inFile("users.txt");
+    if (!inFile) return;
+
+    User user;
+    while (inFile >> user.username >> user.password >> user.email >> user.balance) {
+        users[user.username] = user;
+    }
+    inFile.close();
+}
+
+int getValidIntInput() {
+    int choice;
+    while (true) {
+        cin >> choice;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number: ";
+        } else {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            return choice;
         }
     }
 }
-void addBalance()
-{
-    int add;
-    cout << "Enter the amount you want to add : ";
-    cin >> add;
-    mainBalance+=add;
-    cout << "money added successfull." << endl;
-    cout << "Your current balance is = " << mainBalance << endl <<endl;
-    menu();
-}
 
-
-void burger()
-{
-    cout<<"\t\t\t\t\t    *------BURGER------*"<<endl;
-    cout<<"\t\t\t\tPress '1' Zinger Burger......................TK:299"<<endl;
-    cout<<"\t\t\t\tPress '2' Zinger Burger with Cheese..........TK:349"<<endl;
-    cout<<"\t\t\t\tPress '3' Chicken Burger.....................TK:220"<<endl;
-    cout<<"\t\t\t\tPress '4' Chicken Burger with Cheese.........TK:280"<<endl;
-    cout<<"\t\t\t\tPress '5' Tower Burger.......................TK:380"<<endl;
-    cout<<"Please select option : ";
-    int n;
-    cin >> n;
-    if(n==1)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Zinger burger "<<endl << endl;
-        bill+=299*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-b11:
-        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            burger();
+double getValidDoubleInput() {
+    double amount;
+    while (true) {
+        cin >> amount;
+        if (cin.fail() || amount <= 0) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a positive number: ";
+        } else {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            return amount;
         }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto b11;
-        }
-    }
-    else if (n==2)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Zinger Burger with Cheese "<<endl << endl;
-        bill+=349*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-b12:
-        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            burger();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto b12;
-        }
-    }
-    else if (n==3)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Chicken Burger "<<endl << endl;
-        bill+=220*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-b13:
-        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            burger();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto b13;
-        }
-    }
-    else if (n==4)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Chicken Burger with Cheese"<<endl << endl;
-        bill+=280*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-b14:
-        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            burger();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto b14;
-        }
-    }
-    else if (n==5)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Tower Burger"<<endl << endl;
-        bill+=380*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-b15:
-        cout<<"If you want to go back to 'Burger' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            burger();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto b15;
-        }
-    }
-    else
-    {
-        cout << "Invalid choice.\n";
-        burger();
-
-    }
-
-}
-
-void paratha()
-{
-    cout<<"\t\t\t\t\t   *----PARATHA ROLLS----*"<<endl;
-    cout<<"\t\t\t\tPress '1' Zinger Paratha.....................TK:299"<<endl;
-    cout<<"\t\t\t\tPress '2' Zinger Cheese Paratha..............TK:360"<<endl;
-    cout<<"\t\t\t\tPress '3' Chicken Paratha....................TK:260"<<endl;
-    cout<<"\t\t\t\tPress '4' Vegetarian Paratha.................TK:150"<<endl;
-
-    int prt;
-    cout<<"Please select option : ";
-    cin >> prt;
-    if(prt == 1)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Zinger Paratha"<<endl << endl;
-        bill+=299*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-p11:
-        cout<<"If you want to go back to 'Paratha' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            paratha();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto p11;
-        }
-    }
-    else if(prt == 2)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Zinger Cheese Paratha"<<endl << endl;
-        bill+=360*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-p12:
-        cout<<"If you want to go back to 'Paratha' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            paratha();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto p12;
-        }
-    }
-    else if(prt == 3)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Chicken Paratha"<<endl << endl;
-        bill+=260*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-p13:
-        cout<<"If you want to go back to 'Paratha' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            paratha();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto p13;
-        }
-    }
-    else if(prt == 4)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Vegetarian Paratha"<<endl << endl;
-        bill+=150*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-p14:
-        cout<<"If you want to go back to 'Paratha' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            paratha();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto p14;
-        }
-    }
-    else
-    {
-        cout << "Invalid choice." << endl << endl;
-        paratha();
-    }
-
-}
-
-void shawarma()
-{
-    cout<<"\t\t\t\t\t    *------SHAWARMA-----*"<<endl;
-    cout<<"\t\t\t\tPress '1' Zinger Shawarma....................TK:260"<<endl;
-    cout<<"\t\t\t\tPress '2' Zinger Cheese Shawarma.............TK:299"<<endl;
-    cout<<"\t\t\t\tPress '3' Chicken Shawarma...................TK:180"<<endl;
-    cout<<"\t\t\t\tPress '4' Vegetarian Shawarma................TK:160"<<endl;
-
-    int srm;
-    cout<<"Please select option : ";
-    cin >> srm;
-    if(srm == 1)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Zinger Shawarma"<<endl << endl;
-        bill+=260*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-s11:
-        cout<<"If you want to go back to 'Shawarma' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            shawarma();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto s11;
-        }
-    }
-    else if(srm == 2)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Zinger Cheese Shawarma"<<endl << endl;
-        bill+=299*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-s12:
-        cout<<"If you want to go back to 'Shawarma' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            shawarma();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto s12;
-        }
-    }
-    else if(srm == 3)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Chicken Shawarma"<<endl << endl;
-        bill+=180*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-s13:
-        cout<<"If you want to go back to 'Shawarma' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            shawarma();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto s13;
-        }
-    }
-    else if(srm == 4)
-    {
-        cout<<"How much quantity do you want : ";
-        int a;
-        cin >> a ;
-        cout<<"You Entered "<< a <<" Vegetarian Shawarma"<<endl << endl;
-        bill+=160*a;
-        cout<<"The current bill is: "<< bill <<endl;
-
-s14:
-        cout<<"If you want to go back to 'Shawarma' Press '0'\nGoto 'Menu' Press '1'\nGoto 'Pay Bill' press '2'" << endl;
-        cout<<"Please select option : ";
-        cin >> a ;
-        if (a==0)
-        {
-            shawarma();
-        }
-        else if (a==1)
-        {
-            menu();
-        }
-        else if (a==2)
-        {
-            payBill();
-        }
-        else
-        {
-            cout << "Invalid choice." << endl << endl;
-            goto s14;
-        }
-    }
-
-
-
-}
-
-void menu()
-{
-    cout <<"\t\t\t\t*------Menu------*" << endl ;
-    cout<<"\t\t\t\tPress '1' BURGER"<<endl;
-    cout<<"\t\t\t\tPress '2' PARATHA ROLLS"<<endl;
-    cout<<"\t\t\t\tPress '3' SHAWARMA"<<endl;
-    cout<<"\t\t\t\tPress '4' BIRYANI"<<endl;
-    cout<<"\t\t\t\tPress '5' PIZZA"<<endl;
-    cout<<"\t\t\t\tPress '6' SALAD"<<endl;
-    cout<<"\t\t\t\tPress '7' COLD DRINKS" << endl ;
-    cout<<"\t\t\t\tPress '8' LOGOUT" << endl ;
-    cout<<"Please select option : ";
-    int ms ;
-    cin >> ms;
-    if (ms == 1)
-    {
-        burger();
-    }
-    else if( ms == 2)
-    {
-        paratha();
-    }
-    else if (ms == 3)
-    {
-        shawarma();
-    }
-    else if (ms == 8)
-    {
-        cout << "LogOut successful..." << endl << endl;
-        mainProgram();
     }
 }
 
-
-void login()
-{
-    cout << "\t\t\t\t\tLogin system        " << endl;
-    string username1, password1;
-    cout << "Enter username: ";
-    cin >> username1;
-    cout << "Enter password: ";
-    cin >> password1;
-
-    string storedPassword;
-    if (checkUser(username1, storedPassword) && password1 == storedPassword)
-    {
-        cout << "Login successful." << endl;
-        cout<<"\nAssalam u Alaikum..! "<<username1<<"."<<"\nWhat would you like to order?\n";
-        cout << endl;
-        cnt = 0;
-        menu();
-    }
-    else
-    {
-        int y;
-        cout << "Login unsuccessful." << endl << endl ;
-
-        cout << "if you are not Signup press '1'\nAgain Login press '2' or \nSee password, press '3' " << endl ;
-        l:
-            cnt++;
-        cout<<"Please select option : ";
-        cin >> y;
-        if (y == 3)
-        {
-            forgot();
-        }
-        else if (y == 1)
-        {
-            signup();
-        }
-        else if ( y == 2)
-        {
-
-            if(cnt >= 5)
-            {
-                cout << "You are try 5 times, try again later" << endl ;
-                exit(0);
-            }
-            else{
-             login();
-            }
-        }
-        else
-        {
-            cout << "Invalid choice.\n"<< endl;
-                 goto l;
-        }
-        cout << endl;
+void displayCategoryItems(const unordered_map<string, double> &items) {
+    int index = 1;
+    for (const auto &item : items) {
+        cout << index++ << ". " << item.first << " - BDT " << item.second << "\n";
     }
 }
 
-void signup()
-{
-    cout << "Create username and password " << endl;
-    cout << "Enter username : ";
-    string username, password;
+bool userExists(const string &username) {
+    return users.find(username) != users.end();
+}
+
+void signUp() {
+    string username, password, email;
+    cout << "Enter a username: ";
     cin >> username;
-    cout << "Enter password : ";
-    cin >> password;
 
-    if (saveUser(username, password))
-    {
-        cout << "Signup successful. Please login...." << endl;
-    }
-    else
-    {
-        cout << "Signup failed. Please try again later." << endl;
+    if (userExists(username)) {
+        cout << "User already exists!\n";
+        return;
     }
 
-    cout << endl;
-    login();
+    cout << "Enter a password: ";
+    char ch;
+    password = "";
+    ch = _getch();
+    while (ch != 13) {
+        password.push_back(ch);
+        cout << '*';
+        ch = _getch();
+    }
+    cout << "\n";
+
+    cout << "Enter your email address: ";
+    cin >> email;
+
+    User newUser = {username, password, email, 0.0};
+    users[username] = newUser;
+
+    ofstream outFile("users.txt", ios::app);
+    if (!outFile) {
+        cerr << "Error opening file for writing.\n";
+        return;
+    }
+    outFile << username << " " << password << " " << email << " " << 0.0 << "\n";
+    outFile.close();
+
+    cout << "Sign up successful!\n";
 }
 
-void forgot()
-{
-    cout << "Enter the username : ";
-    string username2;
-    cin >> username2;
-    string storedPassword;
-    int se_key;
-    cout << "Enter your Email : ";
-    string s ;
-    cin >> s ;
-    cout << "Enter the Security Key : ";
-    cin >> se_key;
+void resetPassword() {
+    string username, email, newPassword;
+    cout << "Enter username: ";
+    cin >> username;
+    if (users.find(username) == users.end()) {
+        cout << "Username not found.\n";
+        return;
+    }
+    cout << "Enter email address: ";
+    cin >> email;
+    if (users[username].email != email) {
+        cout << "Email address does not match.\n";
+        return;
+    }
 
-    if (se_key == 1010)
-    {
-        if (checkUser(username2, storedPassword))
-        {
-            cout << "Your password is: " << storedPassword << endl << endl;
-            login();
+    string gMailCode;
+    cout << "Enter the G-mail code: ";
+    cin >> gMailCode;
+
+    cout << "Enter new password: ";
+    char ch;
+    newPassword = "";
+    ch = _getch();
+    while (ch != 13) {
+        if (ch == '\b') {
+            if (newPassword.length() > 0) {
+                newPassword.pop_back();
+                cout << "\b \b";
+            }
+        } else {
+            newPassword.push_back(ch);
+            cout << '*';
         }
-        else
-        {
-            cout << "Your username or security key is wrong." << endl;
-            cout << "Please contact the Admin panel." << endl;
-            cout << "Admin name: Tauhid Musa Rieon" << endl;
-            cout << "Email: tauhidmusarieon01@gmail.com" << endl;
-            cout << "Thanks." << endl;
-            cout << endl;
-        }
+        ch = _getch();
     }
-    else
-    {
-        cout << "Your username or security key is wrong." << endl;
-        cout << "Please contact the Admin panel." << endl;
-        cout << "Admin name: Tauhid Musa Rieon" << endl;
-        cout << "Email: tauhidmusarieon01@gmail.com" << endl;
-        cout << "Thanks." << endl;
-        cout << endl;
-    }
-}
-bool saveUser(const string &username, const string &password)
-{
-    ofstream userFile("users.txt", ios::app);
-    ofstream passFile("passwords.txt", ios::app);
+    cout << "\n";
 
-    if (!userFile.is_open() || !passFile.is_open())
-    {
-        cerr << "Error opening file for writing." << endl;
-        return false;
-    }
-    userFile << username << endl;
-    passFile << password << endl;
-
-    userFile.close();
-    passFile.close();
-
-    return true;
+    users[username].password = newPassword;
+    saveUsers();
+    cout << "Password reset successfully.\n";
 }
 
-bool checkUser(const string &username, string &password)
-{
-    ifstream userFile("users.txt");
-    ifstream passFile("passwords.txt");
-
-    if (!userFile.is_open() || !passFile.is_open())
-    {
-        cerr << "Error opening file for reading." << endl;
-        return false;
-    }
-
-    string line;
-    while (getline(userFile, line))
-    {
-        if (line == username)
-        {
-            if (getline(passFile, password))
-            {
-                userFile.close();
-                passFile.close();
-                return true;
+bool logIn(User &user) {
+    const int maxAttempts = 5;
+    int attempts = 0;
+    while (attempts < maxAttempts) {
+        cout << "Enter username: ";
+        cin >> user.username;
+        cout << "Enter password: ";
+        string password;
+        char ch;
+        while ((ch = _getch()) != '\r') {
+            if (ch == '\b') {
+                if (password.length() > 0) {
+                    password.pop_back();
+                    cout << "\b \b";
+                }
+            } else {
+                password += ch;
+                cout << '*';
             }
         }
-        else
-        {
-            getline(passFile, line);
+        cout << "\n";
+        if (users.find(user.username) != users.end() && users[user.username].password == password) {
+            user = users[user.username];
+            return true;
+        }
+        cout << "\nInvalid username or password. Try again.\n";
+        attempts++;
+    }
+    cout << "\nToo many failed attempts.\n";
+    cout << "Your username or password is wrong.\n";
+    cout << "Please contact the Admin panel. If you are right.\n";
+    cout << "Admin name: Tauhid Musa Rieon\n";
+    cout << "Email: tauhidmusarieon01@gmail.com\n";
+    cout << "Thanks. Exiting program.\n";
+    exit(1);
+}
+
+void orderFood(User &user) {
+    unordered_map<string, double> selectedMenu;
+    int categoryChoice;
+
+    cout << "1. BIRYANI & KHICHURI\n";
+    cout << "2. PIZZA\n";
+    cout << "3. BURGER\n";
+    cout << "4. SNACKS\n";
+    cout << "5. DRINKS AND BEVERAGE\n";
+    cout << "Enter your choice (1-5): ";
+    categoryChoice = getValidIntInput();
+
+    switch (categoryChoice) {
+        case 1: selectedMenu = {
+            {"Beef Khichuri", 120.0},
+            {"Egg Khichuri", 50.0},
+            {"Chicken Khichuri", 90.0},
+            {"Beef Biryani", 185.0},
+            {"Chicken Biryani", 150.0}
+        }; break;
+        case 2: selectedMenu = {
+            {"Chicken Pizza Big", 350.0},
+            {"Chicken Pizza Small", 250.0},
+            {"Beef Pizza Big", 500.0},
+            {"Beef Pizza Small", 350.0},
+            {"Vegetable Pizza Big", 300.0},
+            {"Vegetable Pizza Small", 200.0}
+        }; break;
+        case 3: selectedMenu = {
+            {"Chicken Burger", 100.0},
+            {"Beef Burger", 130.0}
+        }; break;
+        case 4: selectedMenu = {
+            {"France Fry", 100.0},
+            {"Chicken Jhal Fry", 150.0},
+            {"Egg Noodles", 50.0},
+            {"Beef Noodles", 150.0}
+        }; break;
+        case 5: selectedMenu = {
+            {"Lachi", 50.0},
+            {"Faluda", 80.0},
+            {"Cold Coffee Cream", 60.0},
+            {"Cold Coffee Chocolate", 70.0},
+            {"Hot Coffee", 50.0},
+            {"Mango Juice", 60.0},
+            {"Orange Juice", 50.0},
+            {"Banana Juice", 50.0},
+            {"Lemon Juice", 50.0},
+            {"Mojo", 35.0}
+        }; break;
+        default: cout << "Invalid choice!\n"; return;
+    }
+
+    displayCategoryItems(selectedMenu);
+
+    double total = 0.0;
+    int itemChoice, quantity;
+
+    while (true) {
+        cout << "Enter the item number to order (0 to finish): ";
+        itemChoice = getValidIntInput();
+
+        if (itemChoice == 0) break;
+
+        if (itemChoice < 1 || itemChoice > selectedMenu.size()) {
+            cout << "Invalid item choice. Try again.\n";
+            continue;
+        }
+
+        cout << "Enter quantity: ";
+        quantity = getValidIntInput();
+
+        auto it = next(selectedMenu.begin(), itemChoice - 1);
+        total += it->second * quantity;
+
+        cout << "Added " << it->first << " x " << quantity << " to your order.\n";
+    }
+
+    if (total > 0) {
+        cout << "Total cost: BDT " << total << "\n";
+
+        if (user.balance >= total) {
+            user.balance -= total;
+            cout << "Order placed successfully!\n";
+            cout << "Remaining balance: BDT " << user.balance << "\n";
+            users[user.username].balance = user.balance;
+            saveUsers();
+        } else {
+            cout << "Insufficient balance. Please recharge your account.\n";
+        }
+    } else {
+        cout << "No items ordered.\n";
+    }
+}
+
+void mainMenu(User &user) {
+    int choice;
+    do {
+        cout << "\n1. Show Menu List\n";
+        cout << "2. Order Food\n";
+        cout << "3. Check Balance\n";
+        cout << "4. Add Balance\n";
+        cout << "5. Log Out\n";
+        cout << "Enter your choice: ";
+        choice = getValidIntInput();
+
+        switch (choice) {
+            case 1:
+                cout << "\t\t\tMenu List:\n\n";
+                cout << "\t\tBIRYANI & KHICHURI\n";
+                displayCategoryItems({
+                    {"\t\tBeef Khichuri", 120.0},
+                    {"\t\tEgg Khichuri", 50.0},
+                    {"\t\tChicken Khichuri", 90.0},
+                    {"\t\tBeef Biryani", 185.0},
+                    {"\t\tChicken Biryani", 150.0}
+                });
+                cout << "\n\n\t\tPIZZA\n";
+                displayCategoryItems({
+                    {"\t\tChicken Pizza Big", 350.0},
+                    {"\t\tChicken Pizza Small", 250.0},
+                    {"\t\tBeef Pizza Big", 500.0},
+                    {"\t\tBeef Pizza Small", 350.0},
+                    {"\t\tVegetable Pizza Big", 300.0},
+                    {"\t\tVegetable Pizza Small", 200.0}
+                });
+                cout << "\n\n\t\tBURGER\n";
+                displayCategoryItems({
+                    {"\t\tChicken Burger", 100.0},
+                    {"\t\tBeef Burger", 130.0}
+                });
+                cout << "\n\n\t\tSNACKS\n";
+                displayCategoryItems({
+                    {"\t\tFrance Fry", 100.0},
+                    {"\t\tChicken Jhal Fry", 150.0},
+                    {"\t\tEgg Noodles", 50.0},
+                    {"\t\tBeef Noodles", 150.0}
+                });
+                cout << "\n\n\t\tDRINKS AND BEVERAGE\n";
+                displayCategoryItems({
+                    {"\t\tLachi", 50.0},
+                    {"\t\tFaluda", 80.0},
+                    {"\t\tCold Coffee Cream", 60.0},
+                    {"\t\tCold Coffee Chocolate", 70.0},
+                    {"\t\tHot Coffee", 50.0},
+                    {"\t\tMango Juice", 60.0},
+                    {"\t\tOrange Juice", 50.0},
+                    {"\t\tBanana Juice", 50.0},
+                    {"\t\tLemon Juice", 50.0},
+                    {"\t\tMojo", 35.0}
+                });
+
+                break;
+            case 2:
+                orderFood(user);
+                break;
+            case 3:
+                cout << "Your current balance is: BDT " << user.balance << "\n";
+                break;
+            case 4: {
+                cout << "Enter the amount to add to your balance: ";
+                double amount = getValidDoubleInput();
+                user.balance += amount;
+                users[user.username].balance = user.balance;
+                saveUsers();
+                cout << "Balance added successfully! Current balance: BDT " << user.balance << "\n";
+            } break;
+            case 5:
+                cout << "Logging out...\n";
+                break;
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while (choice != 5);
+}
+
+int main() {
+    loadUsers();
+
+    int choice;
+    User loggedInUser;
+
+    while (true) {
+        cout << "1. Log In\n";
+        cout << "2. Sign Up\n";
+        cout << "3. Reset Password\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        choice = getValidIntInput();
+
+        switch (choice) {
+            case 1:
+                if (logIn(loggedInUser)) {
+                    cout << "Login successful!\n";
+                    mainMenu(loggedInUser);
+                }
+                break;
+            case 2: signUp(); break;
+            case 3: resetPassword(); break;
+            case 4: cout << "Exiting the program.\n"; return 0; break;
+            default: cout << "Invalid choice!\n";
         }
     }
-    userFile.close();
-    passFile.close();
-    return false;
-}
-
-void mainProgram()
-{
-    int n, payment;
-    cout << "\t\tWelcome to the resturent : " << endl;
-    cout << "1. Sign up\n2. Login\n3. Exit\nEnter your option : ";
-    cin >> n;
-
-    switch (n)
-    {
-    case 1:
-        signup();
-        break;
-    case 2:
-        login();
-        break;
-    case 3:
-        cout << "Exiting the program. thanks!" << endl;
-        exit(0);
-    default:
-        cout << "Invalid option. Please choose a valid option." << endl;
-    }
-}
-int main()
-{
-
-    mainProgram();
-
-    return 0;
+    return 0 ;
 }
