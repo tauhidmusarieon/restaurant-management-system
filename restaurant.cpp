@@ -1,10 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include <unordered_map>
-#include <string>
-#include <limits>
+#include <bits/stdc++.h>
 #include <conio.h>
-#include <cstdlib>
 
 using namespace std;
 
@@ -190,8 +185,13 @@ bool logIn(U &u) {
         cout << "Invalid username or password. Try again.\n";
         attempts++;
     }
-    cout << "Too many failed attempts.\nContact Admin.\n";
-    exit(1);
+    cout << "\nToo many failed attempts.\n";
+    cout << "Your username or password is wrong.\n";
+    cout << "Please contact the Admin panel. If you are right.\n";
+    cout << "Admin name: Tauhid Musa Rieon\n";
+    cout << "Email: tauhidmusarieon01@gmail.com\n";
+    cout << "Thanks. Exiting program.\n";
+    exit(0);
 }
 
 void order(U &u) {
@@ -284,43 +284,86 @@ void order(U &u) {
     }
 }
 
-void mainMenu(U &u) {
+void mainMenu(U &usr) {
     int choice;
     do {
-        cout << "\n1. Show Menu\n";
-        cout << "2. Order\n";
+        cout << "\n1. Show Menu List\n";
+        cout << "2. Order Food\n";
         cout << "3. Check Balance\n";
         cout << "4. Add Balance\n";
         cout << "5. Log Out\n";
-        cout << "Enter choice: ";
+        cout << "Enter your choice: ";
         choice = getIntInput();
 
         switch (choice) {
             case 1:
-                cout << "Menu:\n";
+                cout << "\t\t\tMenu List:\n\n";
+                cout << "\t\tBIRYANI & KHICHURI\n";
                 showItems({
-                    {"Beef Khichuri", 120.0},
-                    {"Egg Khichuri", 50.0},
-                    {"Chicken Khichuri", 90.0},
-                    {"Beef Biryani", 185.0},
-                    {"Chicken Biryani", 150.0}
+                    {"\t\tBeef Khichuri", 120.0},
+                    {"\t\tEgg Khichuri", 50.0},
+                    {"\t\tChicken Khichuri", 90.0},
+                    {"\t\tBeef Biryani", 185.0},
+                    {"\t\tChicken Biryani", 150.0}
+                });
+                cout << "\n\n\t\tPIZZA\n";
+                showItems({
+                    {"\t\tChicken Pizza Big", 350.0},
+                    {"\t\tChicken Pizza Small", 250.0},
+                    {"\t\tBeef Pizza Big", 500.0},
+                    {"\t\tBeef Pizza Small", 350.0},
+                    {"\t\tVegetable Pizza Big", 300.0},
+                    {"\t\tVegetable Pizza Small", 200.0}
+                });
+                cout << "\n\n\t\tBURGER\n";
+                showItems({
+                    {"\t\tChicken Burger", 100.0},
+                    {"\t\tBeef Burger", 130.0}
+                });
+                cout << "\n\n\t\tSNACKS\n";
+                showItems({
+                    {"\t\tFrance Fry", 100.0},
+                    {"\t\tChicken Jhal Fry", 150.0},
+                    {"\t\tEgg Noodles", 50.0},
+                    {"\t\tBeef Noodles", 150.0}
+                });
+                cout << "\n\n\t\tDRINKS AND BEVERAGE\n";
+                showItems({
+                    {"\t\tLachi", 50.0},
+                    {"\t\tFaluda", 80.0},
+                    {"\t\tCold Coffee Cream", 60.0},
+                    {"\t\tCold Coffee Chocolate", 70.0},
+                    {"\t\tHot Coffee", 50.0},
+                    {"\t\tMango Juice", 60.0},
+                    {"\t\tOrange Juice", 50.0},
+                    {"\t\tBanana Juice", 50.0},
+                    {"\t\tLemon Juice", 50.0},
+                    {"\t\tMojo", 35.0}
                 });
                 break;
-            case 2: order(u); break;
-            case 3: cout << "Balance: BDT " << u.bal << "\n"; break;
+            case 2:
+                order(usr);
+                break;
+            case 3:
+                cout << "Your current balance is: BDT " << usr.bal << "\n";
+                break;
             case 4: {
-                cout << "Enter amount: ";
+                cout << "Enter the amount to add to your balance: ";
                 double amt = getDblInput();
-                u.bal += amt;
-                uMap[u.usr].bal = u.bal;
+                usr.bal += amt;
+                uMap[usr.usr].bal = usr.bal;
                 saveU();
-                cout << "Balance added! Current: BDT " << u.bal << "\n";
+                cout << "Balance added successfully! Current balance: BDT " << usr.bal << "\n";
             } break;
-            case 5: cout << "Logging out...\n"; break;
-            default: cout << "Invalid choice!\n";
+            case 5:
+                cout << "Logging out...\n";
+                break;
+            default:
+                cout << "Invalid choice!\n";
         }
     } while (choice != 5);
 }
+
 
 int main() {
     loadU();
