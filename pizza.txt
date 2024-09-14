@@ -1,0 +1,6 @@
+Chicken Pizza Big 350.0
+Chicken Pizza Small 250.0
+Beef Pizza Big 500.0
+Beef Pizza Small 350.0
+Vegetable Pizza Big 300.0
+Vegetable Pizza Small 200.0

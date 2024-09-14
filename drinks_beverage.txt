@@ -1,0 +1,10 @@
+Lachi 50.0
+Faluda 80.0
+Cold Coffee Cream 60.0
+Cold Coffee Chocolate 70.0
+Hot Coffee 50.0
+Mango Juice 60.0
+Orange Juice 50.0
+Banana Juice 50.0
+Lemon Juice 50.0
+Mojo 35.0

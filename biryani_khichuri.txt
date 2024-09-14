@@ -1,0 +1,5 @@
+Beef Khichuri 120.0
+Egg Khichuri 50.0
+Chicken Khichuri 90.0
+Beef Biryani 185.0
+Chicken Biryani 150.0
